@@ -19,8 +19,22 @@ class Controller {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  getProjectsById(id: string) {
+    return model.findById(id);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   select(req: Request, res: Response) {
     this.getProjects()
+      .then((projects: Project[]) => res.status(200).json({ result: projects }))
+      .catch((err: Error) => res.status(400).json({ result: err }));
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  selectOne(req: Request, res: Response) {
+    const { id } = req.params;
+
+    this.getProjectsById(id)
       .then((projects: Project[]) => res.status(200).json({ result: projects }))
       .catch((err: Error) => res.status(400).json({ result: err }));
   }
