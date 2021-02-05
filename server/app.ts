@@ -23,6 +23,7 @@ class App {
     this.app.route('/').get((req, res) => res.status(200).json({ result: 'hello world' }));
     this.app.route('/api/projects').get((req, res) => this.controller.select(req, res));
     this.app.route('/api/projects/:id').get((req, res) => this.controller.selectOne(req, res));
+    this.app.route('/api/projects/:id').delete((req, res) => this.controller.selectOne(req, res));
   }
 }
 

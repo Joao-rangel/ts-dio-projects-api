@@ -16,8 +16,8 @@ class Database {
   // eslint-disable-next-line
   logger(uri: any) {
     this.dbConnection = mongoose.connection;
-    this.dbConnection.on('connected', () => { console.log('Mongoose está conectado.'); });
-    this.dbConnection.on('error', (error: Error) => { console.error.bind(console, `Erro na conexão:${error}`); });
+    this.dbConnection.on('connected', () => { console.log('Mongoose is connected.'); });
+    this.dbConnection.on('error', (error: Error) => { console.error.bind(console, `Connection error:${error}`); });
   }
 }
 

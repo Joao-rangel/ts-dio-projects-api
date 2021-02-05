@@ -19,8 +19,13 @@ class Controller {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  getProjectsById(id: string) {
+  getById(id: string) {
     return model.findById(id);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  deleteById(id: string) {
+    return model.deleteOne(id);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -34,7 +39,16 @@ class Controller {
   selectOne(req: Request, res: Response) {
     const { id } = req.params;
 
-    this.getProjectsById(id)
+    this.getById(id)
+      .then((project: Project) => res.status(200).json({ result: project }))
+      .catch((err: Error) => res.status(400).json({ result: err }));
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  delete(req: Request, res: Response) {
+    const { id } = req.params;
+
+    this.deleteById(id)
       .then((projects: Project[]) => res.status(200).json({ result: projects }))
       .catch((err: Error) => res.status(400).json({ result: err }));
   }
