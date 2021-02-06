@@ -65,7 +65,12 @@ class Controller {
     const projectUpdate = req.body;
 
     this.updateOne(id, projectUpdate)
-      .then((project: Project) => res.status(200).json({ result: project }))
+      .then((project: Project) => {
+        Object.assign(project, projectUpdate);
+        res.status(200).json({
+          result: project,
+        });
+      })
       .catch((err: Error) => res.status(400).json({ result: err }));
   }
 }
