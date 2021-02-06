@@ -14,18 +14,24 @@ class Controller {
   constructor() {}
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  getProjects() {
+  private getProjects() {
     return model.find({});
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  getById(id: string) {
+  private getById(id: string) {
     return model.findById(id);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  deleteById(id: string) {
+  private deleteById(id: string) {
     return model.deleteOne(id);
+  }
+
+
+  // eslint-disable-next-line
+  private updateOne(id: any, project: any) {
+    return model.findOneAndUpdate(id, project);
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -49,7 +55,17 @@ class Controller {
     const { id } = req.params;
 
     this.deleteById(id)
-      .then((projects: Project[]) => res.status(200).json({ result: projects }))
+      .then((project: Project) => res.status(200).json({ result: project }))
+      .catch((err: Error) => res.status(400).json({ result: err }));
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  update(req: Request, res: Response) {
+    const { id } = req.params;
+    const projectUpdate = req.body;
+
+    this.updateOne(id, projectUpdate)
+      .then((project: Project) => res.status(200).json({ result: project }))
       .catch((err: Error) => res.status(400).json({ result: err }));
   }
 }
