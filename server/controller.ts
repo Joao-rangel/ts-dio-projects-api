@@ -28,6 +28,10 @@ class Controller {
     return model.deleteOne(id);
   }
 
+  // eslint-disable-next-line
+  private create(project: Omit<Project, 'createdAt'>) {
+    return model.create(project);
+  }
 
   // eslint-disable-next-line
   private updateOne(id: any, project: any) {
@@ -56,6 +60,15 @@ class Controller {
 
     this.deleteById(id)
       .then((project: Project) => res.status(200).json({ result: project }))
+      .catch((err: Error) => res.status(400).json({ result: err }));
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  insert(req: Request, res: Response) {
+    const newProject = req.body;
+
+    this.create(newProject)
+      .then((project) => res.status(200).json({ result: project }))
       .catch((err: Error) => res.status(400).json({ result: err }));
   }
 
